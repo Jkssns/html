@@ -1,0 +1,84 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzMiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAzMyAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjMxIiBoZWlnaHQ9IjE4IiByeD0iOSIgZmlsbD0iIzNBM0EzQSIgZmlsbC1vcGFjaXR5PSIwLjMiLz4KPHJlY3QgeD0iMTAuNSIgeT0iNCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiBzdHJva2U9IndoaXRlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMi41IDE0VjE2SDIyLjVWNkgyMC41IiBzdHJva2U9IndoaXRlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNC41IDExVjdMMTcuNSA5TDE0LjUgMTFaIiBzdHJva2U9IndoaXRlIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iMzIiIGhlaWdodD0iMTkiIHJ4PSI5LjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjMiLz4KPC9zdmc+Cg==" alt="">
+</body>
+<script type="module">
+
+        class _Promise {
+            static Pending = 'pending'
+            static Fulfilled = 'fulfilled'
+            static Rejected = 'rejected'
+            status = _Promise.Pending
+            value = ''
+            reason = '' 
+            callbacks = []
+
+            constructor(func) {
+                const _resolve = (value) => {
+                    if (this.status === _Promise.Pending) {
+                        this.value = value
+                        this.status = _Promise.Fulfilled
+                        this.callbacks.forEach(item => this._handlerFn(item, _Promise.Fulfilled))
+                    }
+                }
+    
+                const _reject = (err) => {
+                    if (this.status === _Promise.Pending) { 
+                        this.reason = err
+                        this.status = _Promise.Rejected
+                        this.callbacks.forEach(item => this._handlerFn(item, _Promise.Rejected))
+                    }
+                }
+                
+                try {
+                    func(_resolve, _reject)
+                } catch (err) {
+                    _reject(err)
+                }
+            }
+
+            then(successFn, failFn) {
+                if (this.status !== _Promise.Pending) {
+                    if (this.value) {
+                        successFn && successFn(this.value)
+                    } else {
+                        failFn && failFn(this.reason)
+                    }
+                } else {
+                    this.callbacks.push({
+                        successFn,
+                        failFn
+                    })
+                }
+            }
+
+            _handlerFn({ successFn, failFn } = eventObj, flag) {
+                if (flag === _Promise.Fulfilled) {
+                    successFn && successFn(this.value)
+                } else if (flag === _Promise.Rejected) {
+                    failFn && failFn(this.reason)
+                }
+            }
+        }
+
+        function api() {
+            return new _Promise((rel, rej) => {
+                setTimeout(() => {
+                }, 100)
+            })
+        }
+
+        api().then(res => {
+            console.log("res1::: ", res);
+        }, err => {
+            console.log("err1::: ", err);
+        })
+</script>
+</html>

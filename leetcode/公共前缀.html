@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	var a1 = ['flower', 'flabb', 'flacc']
+	var a2 = ["aa","aa"]
+	var a3 = ["car","cir"]
+	
+	const getBefore = (strs) => {
+		let pre = strs[0]
+		let res = ''
+
+		strs.forEach((item, index) => {
+			if (index > 0) {
+				for (let i=0; i<item.length; i++) {
+					if (item[i] === pre[i]) {
+						!res.includes(item[i]) && (res += item[i])
+					} else {
+						break
+					}
+				}
+				pre = item
+			}
+		})
+
+		return res
+	}
+
+	console.log("getBefore(arr)::: ", getBefore(a1));
+</script>
+</html>

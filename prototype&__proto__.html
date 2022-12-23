@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 1、原型就是prototype，每一个函数（除了箭头函数）都有一个原型，原型的作用是为了实现js三大特性“继承、封装、多态”中的继承。
+    // 2、可以把它理解成一个js的内置属性，使用起来
+    var obj = {
+        a: 1
+    }
+    // 就像obj.a一样
+    // 3、我来声明一个函数
+    function one () {}
+    console.log("one::: ", one.prototype);
+    // 4、就是这样，就像你每创建一个obj就有一个a一样（假设），原型就是你每创建一个函数，函数就会自动加一个叫做prototype的属性。
+
+    // 5、接下来看一下是如何实现继承的。
+
+    // 6、首先创建一个构造函数Two，是不是发现和one没什么不同，是的，构造函数和普通函数就是一样的。不同点如下。
+        // 6-1、构造函数里面的内容和普通的函数不一样。
+        // 6-2、一般名称大写开头，目的就是为了区分构造和普通函数。
+        // 6-3、用法不一样，构造函数用new来调用，普通函数直接调用。
+    function Two(num) {    // 构造函数
+        this.num = num
+    }
+
+    const two = new Two(1)
+    console.log(two.num) // 1
+
+    function three(num) {   // 普通函数
+        return num + 1
+    }
+    three(1) // 2
+
+    // 7、实现继承
+    function 人类生成机(name, age, sex) {
+        this.name = name
+        this.age = age
+        this.sex = sex === 1 ? '男' : '女'
+    }
+    const 李 = new 人类生成机('李强', 18, 1); console.log("李::: ", 李.name, 李.age, 李.sex); //  李::: 李强 18 男
+    const 吕 = new 人类生成机('吕雪', 22, 2)
+    const 张 = new 人类生成机('张芸', 18, 2)
+    const 杨 = new 人类生成机('杨过', 40, 1)
+
+    // 8、是不是感觉普通函数也能做到这些，重点来了
+    人类生成机.prototype.身高 = 180
+    console.log("李.身高::: ", 李.身高);    // 180
+    console.log("吕.身高::: ", 吕.身高);    // 180
+    console.log("张.身高::: ", 张.身高);    // 180
+    console.log("杨.身高::: ", 杨.身高);    // 180
+
+    // 9、只要是通过new出来的人，在其prototype（原型）上加一个属性，所有人就都有了这个属性，明白这个为什么叫原型了吧。
+    // 10、进阶一下
+    人类生成机.prototype.getWeight = function () {
+        if (this.name === '李强') {
+            return '傻大个'
+        } else {
+            return '超级苗条'
+        }
+    }
+
+    console.log("李.体重::: ", 李.getWeight());   // 傻大个
+    console.log("吕.体重::: ", 吕.getWeight());   // 超级苗条
+    console.log("张.体重::: ", 张.getWeight());   // 超级苗条
+    console.log("杨.体重::: ", 杨.getWeight());   // 超级苗条
+
+    // 11、看见没，方法也被继承了，这就是继承的作用。
+    
+    // 12、但是这在开发中有什么用呢？再进阶一下。
+    console.log("Array.prototype::: ", Array.prototype);
+    // console.log("String.prototype::: ", String.prototype);
+    // console.log("Object.prototype::: ", Object.prototype);
+
+    // 下面是数组原型上的方法
+
+    // concat: ƒ concat() 
+    // fill: ƒ fill()
+    // filter: ƒ filter()
+    // find: ƒ find()
+    // findIndex: ƒ findIndex()
+    // flat: ƒ flat()
+    // flatMap: ƒ flatMap()
+    // pop: ƒ pop()
+    // push: ƒ push()
+    // reduce: ƒ reduce()
+    // reduceRight: ƒ reduceRight()
+    // reverse: ƒ reverse()
+    // shift: ƒ shift()
+    // slice: ƒ slice()
+    // some: ƒ some()
+    // sort: ƒ sort()
+    // splice: ƒ splice()
+
+    // 看到了吗，数组的原型上有巨多的方法，我只复制了一部分。
+    // 但是我们如果使用这些方法时要new一个 Array(), new Object(), new String()才能使用prototype上的方法的话，那就太麻烦了。
+    // 所以每写一个[], 一个{}， 一个""，这都叫做字面量。实际上就是js通过特定的字面量new了一个实例对象。
+    // 虽然我们只是通过字面量{}创建了对象，但是js还是通过隐式的new创建的，看不见罢了。
+
+    [1, 2, 3].filter(item => item > 2) // 3
+    // 这就是原型！
+
+
+    // 接下来进入第二关，原型链。
+    // 1、上面说了，每一个函数（除箭头函数）都有一个原型，凭什么就函数特殊，对象也有的。
+    // 2、每一个对象都有一个__proto__属性，这个属性就叫原型链。
+    // 3、为什么叫原型链呢？肯定和原型有关，因为__proto__指向构造函数的prototype。可能有点懵，再来例子。
+    const arr = [1, 2, 3]
+    // 104行说了，字面量，也是new出来的不管是数组、对象还是字符串，我们把new出来的东西统一称为实例化对象，是对象，就有__proto__，就有原型链。
+    // 看一下arr的原型链到底指向谁。
+    console.log(arr.__proto__ === Array.prototype) // true
+    console.log("Array.prototype::: ", Array.prototype); // 一大堆方法
+    console.log("arr.__proto__::: ", arr.__proto__);     // 一大堆方法
+    console.log("Array.prototype.filter::: ", Array.prototype.filter); // 数组filter方法
+    console.log("arr.__proto__.filter::: ", arr.__proto__.filter); // 数组filter方法
+
+    // 所以说，[]实际上是被new出来的，被new构造函数的就是Array。
+    // 但是为什么arr.filter就能直接调用方法呢？而不是用arr.__proto__.filter，这就是js的问题了，js为了方便，就把原型链给省略了。
+    // 要是没有省略，也就没有你为什么不懂原型链的问题了。
+    // 这，就是原型链！
+
+    // 看到这里了，再去看一下57行。就又加深一点印象了。
+    console.log("杨.身高::: ", 杨.身高);    // 180  省略原型链的
+    console.log("杨.身高::: ", 杨.__proto__.身高);    // 180    没省略原型链的
+
+
+</script>
+</html>
+
+

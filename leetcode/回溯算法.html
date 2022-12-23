@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body></body>
+    <script>
+        var n = 4,
+            k = 2;
+
+        const array = [];
+        const res = [
+            // [1, 2],
+            // [1, 3],
+            // [1, 4],
+            // [2, 3],
+            // [2, 4],
+            // [3, 4],
+        ];
+
+        const backTracking = (cur, n, k, start) => {
+            if (cur.length === k) {
+				array.push(...cur)
+				return
+			}
+
+			for (let i=start; i<=n; i++) {
+				cur.push([i, i+1])
+				backTracking(cur, n, k, start+1)
+				cur.pop()
+			}
+        };
+
+        backTracking(res, n, k, 1);
+
+		console.log("res::: ", array);
+
+
+		// let result = []
+		// let path = []
+		// var combine = function(n, k) {
+		// 	result = []
+		// 	combineHelper(n, k, 1)
+		// 	return result
+		// };
+		// const combineHelper = (n, k, startIndex) => {
+		// 	if (path.length === k) {
+		// 		result.push([...path])
+		// 		return
+		// 	}
+		// 	for (let i = startIndex; i <= n - (k - path.length) + 1; ++i) {
+		// 		path.push(i)
+		// 		combineHelper(n, k, i + 1)
+		// 		path.pop()
+		// 	}
+		// }
+
+
+    </script>
+</html>

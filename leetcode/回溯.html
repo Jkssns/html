@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+
+	function DFS(nums = []) {
+        let res = [];
+        const dfs = (path = []) => {
+            if (path.length == nums.length) {
+                res.push([...path]);
+                return;
+            }
+
+            for (let i = 0; i < nums.length; i++) {
+                if (path.includes(nums[i])) {
+                    continue;
+                }
+
+                path.push(nums[i]);
+                dfs(path)
+                path.pop();
+            }
+        }
+        dfs([]);
+        return res;
+    }
+
+    console.log(DFS([1, 2]));
+
+</script>
+</html>

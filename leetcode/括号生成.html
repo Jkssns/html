@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+//	数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+
+// 示例 1：
+
+// let n = 3
+// 输出：["((()))","(()())","(())()","()(())","()()()"]
+
+// 示例 2：
+
+// let n = 1
+// 输出：["()"]  
+
+//     1 <= n <= 8
+
+/**
+ * @param {number} n
+ * @return {string[]}    
+ */
+var generateParenthesis = function(n) {
+	if (n === 1) {
+		return ['()']
+	}
+	const arr = Array(2 * n).fill('')
+	const res = []
+
+	const flat = (arr, index) => {
+		if (arr.length === index) {
+			if (isValid(arr)) {
+				res.push(arr.join(''))
+			}
+		} else {
+			arr[index] = '('
+			flat(arr, index + 1)
+			arr[index] = ')'
+			flat(arr, index + 1)
+		}
+	}
+
+	flat(arr, 0)
+
+	function isValid(str) {
+		let count = 0
+		for (let i=0, len=str.length; i<len; i++) {
+			if (str[i] === '(') {
+				count++
+			} else {
+				count--
+			}
+			if (count < 0) {
+				return false
+			}
+		}
+		return count === 0
+	}
+
+	return res
+};
+
+console.log("generateParenthesis::: ", generateParenthesis(3));
+
+// class Solution {  
+//     public List<String> generateParenthesis(int n) {
+    //     List<String> combinations = new ArrayList<String>();
+    //     generateAll(new char[2 * n], 0, combinations);
+    //     return combinations;
+    // }
+
+//     public void generateAll(char[] current, int pos, List<String> result) {
+//         if (pos == current.length) {
+//             if (valid(current)) {
+//                 result.add(new String(current));
+//             }
+//         } else {
+//             current[pos] = '(';
+//             generateAll(current, pos + 1, result);
+//             current[pos] = ')';
+//             generateAll(current, pos + 1, result);
+//         }
+//     }
+
+//     public boolean valid(char[] current) {
+//         int balance = 0;
+//         for (char c: current) {
+//             if (c == '(') {
+//                 ++balance;
+//             } else {  
+//                 --balance;
+//             }
+//             if (balance < 0) {
+//                 return false;
+//             }
+//         }
+//         return balance == 0;
+//     }
+// }
+
+
+</script>
+</html>

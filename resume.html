@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>简历生成器</title>
+	<style>
+		label {
+			display: block;
+			margin: 20px;
+		}
+		button {
+			margin: 20px;
+		}
+	</style>
+</head>
+<body>
+	<label>
+		姓名：
+		<input type="text" id="name">
+	</label>
+	<label>
+		年龄：
+		<input type="number" id="number">
+	</label>
+
+	<label>
+		爱好：
+		<input type="text" id="text">
+	</label>
+	<label>
+		性别：
+		<input type="radio" value="男" name="sex" checked class="radio"> 男
+		<input type="radio" value="女" name="sex" class="radio"> 女
+	</label>
+
+	<input type="button" value="生成简历" id="btn">
+</body>
+<script>
+	const btn = document.getElementById('btn');
+	const name = document.getElementById('name');
+	const number = document.getElementById('number');
+	const text = document.getElementById('text');
+	const radios = document.getElementsByClassName('radio');
+
+	btn.onclick = (e) => {
+		let sex = ''
+		Array.from(radios).forEach(item => {
+			if (item.checked) {
+				sex = item.value
+			}
+		});
+
+		const str = `姓名：${name.value}
+年龄：${number.value}
+爱好：${text.value}
+性别：${sex}`
+		const fileName = '简历.docx'
+		const file = new File(str.split('\n').map(item => item + '\n'), fileName, {type: 'text/plain'})
+
+		const a = document.createElement('a')
+		a.href = URL.createObjectURL(file);
+		a.download = fileName
+		a.click()
+		a.remove()
+	}
+</script>
+</html>

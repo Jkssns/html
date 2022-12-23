@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	/*
+ * @lc app=leetcode.cn id=11 lang=javascript
+ *
+ * [11] 盛最多水的容器
+ */
+
+// @lc code=start
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+ const maxArea = (height) => {
+	let result = 0,
+		left = 0,
+		right = height.length - 1;
+
+	while (left < right) {
+		let smallestSide = Math.min(height[left], height[right]);
+		let area = (right - left) * smallestSide;
+
+		if (area > result) result = area;
+
+		if (height[left] < height[right]) left++;
+		else right--;
+	}
+
+	return result;
+};
+
+console.log("maxArea::: ", maxArea([1,8,6,2,5,4,8,3,7]));
+
+</script>
+</html>

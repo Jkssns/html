@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+// 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+// 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+
+// 示例 1：
+
+let digits = "23"
+// 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+// 示例 2：
+
+// let digits = ""
+// 输出：[]
+
+// 示例 3：
+
+// let digits = "2"
+// 输出：["a","b","c"]
+
+ 
+
+// 提示：
+
+//     0 <= digits.length <= 4
+//     digits[i] 是范围 ['2', '9'] 的一个数字。
+
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+
+// result = []
+// function backtrack(路径, 选择列表){
+//     if(满足结束条件)
+//     {
+//         result.add(路径)
+//         return;
+//     }
+//     for(let i = 0 ; i < 选择列表的长度 ;i++)
+//     {
+//         做选择
+//         backtrack(路径, 选择列表)
+//         撤销选择
+//     }
+// }
+
+var letterCombinations = function(digits) {
+	if (!digits) {
+		return []
+	}
+	const obj = {
+		'2': 'abc',
+		'3': 'def',
+		'4': 'ghi',
+		'5': 'jkl',
+		'6': 'mno',
+		'7': 'pqrs',
+		'8': 'tuv',
+		'9': 'wxyz',
+	}
+	if (digits.length <= 1) {
+		return obj[digits].split('')
+	}
+
+	const result = []
+
+	function backtrack(res, obj, digits, index){
+		if(index === digits.length) {
+			result.push(res.join(''))
+		} else {
+			let current = obj[digits[index]]
+			for(let i=0; i<current.length ;i++) {
+				res.push(current[i])
+				backtrack(res, obj, digits, index+1)
+				res.splice(index, 1)
+			}
+		}
+	}
+
+	backtrack([], obj, digits, 0)
+
+	return result
+};
+
+console.log("letterCombinations()::: ", letterCombinations(digits));
+
+
+// class Solution {
+//     public List<String> letterCombinations(String digits) {
+//         List<String> combinations = new ArrayList<String>();
+//         if (digits.length() == 0) {
+//             return combinations;
+//         }
+//         Map<Character, String> phoneMap = new HashMap<Character, String>() {{
+//             put('2', "abc");
+//             put('3', "def");
+//             put('4', "ghi");
+//             put('5', "jkl");
+//             put('6', "mno");
+//             put('7', "pqrs");
+//             put('8', "tuv");
+//             put('9', "wxyz");
+//         }};
+// 
+//         backtrack(combinations, phoneMap, digits, 0, new StringBuffer());
+//         return combinations;
+//     }
+
+//     public void backtrack(List<String> combinations, Map<Character, String> phoneMap, String digits, int index, StringBuffer combination) {
+//         if (index == digits.length()) {
+//             combinations.add(combination.toString());
+//         } else {
+//             char digit = digits.charAt(index);
+//             String letters = phoneMap.get(digit);
+//             int lettersCount = letters.length();
+//             for (int i = 0; i < lettersCount; i++) {
+//                 combination.append(letters.charAt(i));
+//                 backtrack(combinations, phoneMap, digits, index + 1, combination);
+//                 combination.deleteCharAt(index);
+//             }   
+//         }
+//     }
+// }
+
+</script>
+</html>

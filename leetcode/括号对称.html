@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+
+	function getStr(str) {
+		if (str.length  % 2 !== 0) {
+			return false
+		}
+
+		const arr = []
+		const obj = {
+			')': '(',
+			'}': '{',
+			']': '[',
+		}
+		const left = ['(', '[', '{']
+		
+		for (let i=0; i<str.length; i++) {
+			if (left.includes(str[i])) {
+				arr.push(str[i])
+			} else {
+				if (arr[arr.length - 1] === obj[str[i]]) {
+					arr.splice(arr.length - 1, 1)
+				} else {
+					return false
+				}
+			}
+		}
+
+		return arr.length <= 0
+	}
+	console.log(getStr('()[]'));
+	console.log(getStr('([)]'));
+	console.log(getStr('[[{()}]]'));
+	console.log(getStr('{}[](){()}'));
+
+
+</script>
+</html>

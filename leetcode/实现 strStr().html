@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+// 示例 1：
+
+// 输入：haystack = "hello", needle = "ll"
+// 输出：2
+
+// 示例 2：
+
+// 输入：haystack = "aaaaa", needle = "bba"
+// 输出：-1
+
+// 示例 3：
+
+// 输入：haystack = "", needle = ""
+// 输出：0
+
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+
+let haystack = "mississippi", needle = "issip";
+// let haystack = "hello", needle = "ll";
+var strStr = function(haystack, needle) {
+	if (needle === '') {
+		return 0
+	}
+	if (!haystack) {
+		return -1
+	}
+
+	if (needle.length > haystack.length) {
+		return -1
+	}
+
+	// for (let i=0; i<haystack.length; i++) {
+	// 	let flag = true
+	// 	for (let j=0; j<needle.length; j++) {
+	// 		if (haystack[] !== needle[j]) {
+	// 			if (first === false) {
+	// 				first = i
+	// 			}
+	// 		} else {
+	// 			break;
+	// 		}
+	// 	}
+	// }
+
+	return first === false ? -1 : first
+};
+
+// let haystack = "heolll", needle = "lll";
+var strStr = function(haystack, needle) {
+    const n = haystack.length, m = needle.length;
+    for (let i = 0; i + m <= n; i++) {
+        let flag = true;
+        for (let j = 0; j < m; j++) {
+            if (haystack[i + j] != needle[j]) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            return i;
+        }
+    }
+    return -1;
+};
+
+
+
+</script>
+</html>

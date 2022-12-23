@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    iterator
+</body>
+
+<script>
+    const iterator = () => {
+        let nextVal
+        return {
+            [Symbol.iterator]: function () { return this },
+            next: function() {
+                if (!nextVal) {
+                    nextVal = 3
+                } else {
+                    nextVal += 3
+                }
+                return {
+                    value: nextVal,
+                    done: nextVal > 30
+                }
+            }
+        }
+    }
+
+    for (let i of iterator()) {
+        console.log("i::: ", i);
+    }
+</script>
+</html>

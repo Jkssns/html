@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+		<style>
+			button {
+				/* box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff; */
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+				/* border: 1px solid #fff; */
+                transform: scaleY(0);
+                opacity: 0;
+			}
+		</style>
+    </head>
+    <body>
+		<button>qwreqwer</button>
+	</body>
+    <script>
+        // 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+
+        // 请你将两个数相加，并以相同形式返回一个表示和的链表。
+
+        // 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+
+        // 示例 1：
+
+        // 输入：l1 = [2,4,3], l2 = [5,6,4]
+        // 输出：[7,0,8]
+        // 解释：342 + 465 = 807.
+
+        // 示例 2：
+
+        // 输入：l1 = [0], l2 = [0]
+        // 输出：[0]
+
+        // 示例 3：
+
+        // 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+        // 输出：[8,9,9,9,0,0,0,1]
+        // function ListNode(val, next) {
+        //     this.val = val === undefined ? 0 : val;
+        //     this.next = next === undefined ? null : next;
+        // }
+        /**
+         * Definition for singly-linked list.
+         * function ListNode(val, next) {
+         *     this.val = (val===undefined ? 0 : val)
+         *     this.next = (next===undefined ? null : next)
+         * }
+         */
+        /**
+         * @param {ListNode} l1
+         * @param {ListNode} l2
+         * @return {ListNode}
+         */
+        // var addTwoNumbers = function (l1, l2) {};
+
+        // class ListNode {
+        //     constructor(key) {
+        //         this.next = null;
+        //         this.key = key;
+        //     }
+        // }
+
+        /* 
+            
+            猎户住在山腰上，常年靠打猎为生。
+
+山上没有医生，每当他受了伤，就在房檐上点燃一支蜡烛。这样火光会在夜晚映出去，山脚的村民就会来帮他。
+
+医生叫小花，每次都很准时，听说蜡烛亮了，摸黑就登山，天不亮便赶到猎户家里，帮他治伤，陪他养伤。
+
+猎户有时候开玩笑说，小花不如我娶了你吧，这样下次受伤，我就不必等半日了。
+
+而小花每次都说，娶我可贵了，家里要的彩礼，你给不起。
+
+但有一次猎户真的差点死掉，等小花赶到山腰的屋子，他只剩下半口气吊着。
+
+小花那次哭的一塌糊涂，在山腰上住了两个月，帮他换药，喂他吃饭，劝他不要再打猎。
+
+猎户整整想了两个月。
+
+小花下山回家那天，猎户最后一次问她说，娶你需要多少彩礼？
+
+猎户又说，等我凑够了娶你的钱，我就再不打猎了。
+
+小花笑着问，一言为定？
+
+猎户跟动物打交道的，从来都是一言为定。
+
+等下次猎户再往屋檐上点起蜡烛，家里已经多了两对鹿角，一整套狼皮。
+
+小花给他治伤的时候，猎户疼的呲牙咧嘴，但忍不住一直在笑。
+
+小花怪他，这么重的伤，你怎么还笑得出来。
+
+猎户说，开心，我再打套熊皮，就够给你家的彩礼钱了。
+
+小花劝他说，明年吧，冬天快要到了，大雪会封住山。
+
+猎户说不等，伤好了就去，封山前能回来，明年开春就娶你，一分一秒也不耽搁。
+
+猎户伤好到一半就带着狗上了山。
+
+熊出没在深山密林里，猎户一走要去大半个月。
+
+小花在山脚算着日子等他，她希望有一天猎户会笑着过来，带着他承诺的彩礼，把自己娶回家。
+
+但今年初雪来的太早。
+
+大雪封山那天，还没有一个人看见猎户从山林里出来。
+
+小花焦急的等待了半个月，雪已经厚到半人高，猎户仍没出来。
+
+村子的人都说猎户一定是死了，他太贪心，冬天还要进山，触怒了山神。
+
+只有小花知道，猎户是等不及要兑现他的承诺。
+
+某一个深夜，小花带着药箱趁黑离开家，摸进了深山里。
+
+她要去寻找猎户，并把他救回来。
+
+来年开春，大雪融化，猎户活着从山里走了出来。
+
+他实现了自己的承诺。
+
+纵使狗全饿死在山里，他依旧带着熊皮，剩了半条命跑出来。
+
+猎户开开心心的回家，把熊皮挂好，然后在房檐挂上了一只蜡烛。
+
+但他没能等到小花。
+
+这时他才知道，小花已经消失了整整一个冬天。
+
+谁都没有再见过她。
+
+猎户疯了，此后他每个月都要去深山转上一圈，却不再打猎。
+
+回家总要点起一根蜡烛，然后满怀希望的看着上山的路，再一次次失望。
+
+第二年冬天，猎户最后一次从深山回来，大雪将落，他在自己的院子里点上了几百根蜡烛。
+
+那晚山腰大火，从此再也没有人见过猎户。
+
+临近的地方只留下传说。
+
+据说附近经常游荡着一个人，孔武有力，但却目光涣散，逢人就只说一句话：
+
+冬季天干物燥，是火灾隐患的高发期，照明时明火不离人，周边远离可燃物。增强消防安全意识，积极预防火灾，保障生命安全。
+        
+        
+         */
+
+        // class List {
+        //     constructor() {
+        //         this.head = null;
+        //         this.length = 0;
+        //     }
+
+        //     static createNode(key) {
+        //         return new ListNode(key);
+        //     }
+
+        //     // 往头部插入数据
+        //     insert(node) {
+        //         // 如果head后面有指向的节点
+        //         if (this.head) {
+        //             node.next = this.head;
+        //         } else {
+        //             node.next = null;
+        //         }
+        //         this.head = node;
+        //         this.length++;
+        //     }
+
+        //     find(key) {
+        //         let node = this.head;
+        //         while (node !== null && node.key !== key) {
+        //             node = node.next;
+        //         }
+        //         return node;
+        //     }
+
+        //     delete(node) {
+        //         if (this.length === 0) {
+        //             throw 'node is undefined';
+        //         }
+
+        //         if (node === this.head) {
+        //             this.head = node.next;
+        //             this.length--;
+        //             return;
+        //         }
+
+        //         let prevNode = this.head;
+
+        //         while (prevNode.next !== node) {
+        //             prevNode = prevNode.next;
+        //         }
+
+        //         if (node.next === null) {
+        //             prevNode.next = null;
+        //         }
+        //         if (node.next) {
+        //             prevNode.next = node.next;
+        //         }
+        //         this.length--;
+        //     }
+        // }
+
+        // const node = new List();
+
+        // node.insert({
+        //     key: 1,
+        //     a: 111,
+        // });
+
+        // node.insert({
+        //     key: 2,
+        //     b: 222,
+        // });
+
+        // node.insert({
+        //     key: 3,
+        //     c: 333,
+        // });
+
+        // const n = node.find(3);
+
+        // node.delete(n);
+        // console.log('node::: ', node);
+        // console.log('n::: ', n);
+
+        var addTwoNumbers = function (l1, l2) {
+            let head = null,
+                tail = null;
+            let carry = 0;
+            while (l1 || l2) {
+                const n1 = l1 ? l1.val : 0;
+                const n2 = l2 ? l2.val : 0;
+                const sum = n1 + n2 + carry;
+                if (!head) {
+                    head = tail = new ListNode(sum % 10);
+                } else {
+                    tail.next = new ListNode(sum % 10);
+                    tail = tail.next;
+                }
+                carry = Math.floor(sum / 10);
+                if (l1) {
+                    l1 = l1.next;
+                }
+                if (l2) {
+                    l2 = l2.next;
+                }
+            }
+            if (carry > 0) {
+                tail.next = new ListNode(carry);
+            }
+            return head;
+        };
+
+		function Node(val, next) {
+			this.val = (val===undefined ? 0 : val)
+			this.next = (next===undefined ? null : next)
+		}
+
+		const addAtHead = (head, value) => {
+			const newHead = new Node(value);
+			newHead.next = head;
+			return newHead;
+		}
+
+		const node = new Node(1)
+		
+		console.log("node::: ", addAtHead(node, 2));
+
+
+    </script>
+</html>

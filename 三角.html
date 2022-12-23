@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .sanjiao {
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 50px;
+        border-color: transparent transparent yellowgreen transparent;
+    }
+    .sanjiao::after {
+        content: ' ';
+        display: block;
+        width: 100px;
+        height: 1px;
+        margin-top: 50px;
+        margin-left: -50px;
+        background: yellowgreen;
+        box-shadow: 0px 1px 2px 0px red;
+    }
+    .two {
+        margin-left: -50px;
+        margin-top: -50px;
+        border-width: 100px;
+    }
+    </style>
+</head>
+<body>
+    <div style="position: relative;">
+        <div class="sanjiao"></div>
+        <div class="sanjiao two"></div>
+    </div>
+</body>
+<script>
+
+
+
+
+let a = {n:1}
+
+let b = a
+
+a.x = a = {n:2}
+
+console.log(a.x)
+
+console.log(b)
+
+</script>
+</html>

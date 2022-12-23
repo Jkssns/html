@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>等宝打电话第1天</title>
+    <style>
+        div, p, img {
+            margin: 0;
+            padding: 0;
+        }
+        #app {
+            width: 500px;
+            height: auto;
+            margin: 150px auto;
+        }
+        p {
+            width: 100%;
+            height: 200px;
+            margin-top: 30px;
+            text-align: center;
+            background-image: -webkit-linear-gradient(left, blue, #66ffff 10%, #cc00ff 20%, #CC00CC 30%, #CCCCFF 40%, #00FFFF 50%, #CCCCFF 60%, #CC00CC 70%, #CC00FF 80%, #66FFFF 90%, blue 100%);
+            -webkit-text-fill-color: transparent;
+            /* 将字体设置成透明色 */
+            -webkit-background-clip: text;
+            /* 裁剪背景图，使文字作为裁剪区域向外裁剪 */
+            -webkit-background-size: 200% 100%;
+            -webkit-animation: masked-animation 4s linear infinite;
+            font-size: 20px;
+        }
+
+        @keyframes masked-animation {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -100% 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <img src="./tingting.png" alt="">
+        <p id="wait"></p>
+
+    </div>
+</body>
+<script>
+    function getRemainderTime (startTime){
+        var s1 = new Date(startTime.replace(/-/g, "/")),
+        s2 = new Date(),
+        runTime = parseInt((s2.getTime() - s1.getTime()) / 1000);
+        var year = Math.floor(runTime / 86400 / 365);
+        runTime = runTime % (86400 * 365);
+        var month = Math.floor(runTime / 86400 / 30);
+        runTime = runTime % (86400 * 30);
+        var day = Math.floor(runTime / 86400);
+        runTime = runTime % 86400;
+        var hour = Math.floor(runTime / 3600);
+        runTime = runTime % 3600;
+        var minute = Math.floor(runTime / 60);
+        runTime = runTime % 60;
+        var second = runTime;
+    　　return year+'年'+month+'月'+day+'天'+hour+'时'+minute+'分'+second + '秒';
+    }
+
+
+    const getDay = (time) => {
+        let s1 = new Date(time), s2 = new Date(), runTime = parseInt((s2.getTime() - s1.getTime()) / 1000);
+        var day = Math.floor(runTime / (24*60*60));
+        return day
+    }
+
+    const wait = document.getElementById('wait')
+
+
+    window.onload = function() {
+        const begin = '2021-3-5 14:29:00'
+        document.title = `等宝打电话第${getDay(begin)}天`
+        wait.innerText = `已经等刘婷了：${getRemainderTime(begin)}`
+        setInterval(() => {
+            wait.innerText = `已经等刘婷了：${getRemainderTime(begin)}`
+        }, 1000)
+    }
+</script>
+</html>
+

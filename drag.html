@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		div {
+			width: 200px;
+			height: 200px;
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<img draggable="true" ondragstart="onDragStart(event)" src="https://jkssns.oss-cn-hangzhou.aliyuncs.com/images/bear.jpg" alt="">
+	</div>
+
+	<div ondragover="onDragOver(event)" ondrop="onDrop(event)">
+
+	</div>
+</body>
+<script>
+	let imgNode = null
+	function onDragStart(e) {
+		console.log("start::: ", e);
+		imgNode = e.target.outerHTML
+	}
+
+	function onDrop(e) {
+		e.preventDefault()
+		e.target.innerHTML = imgNode
+		console.log("放置::: ", e);
+	}
+
+	function onDragOver(e) {
+		e.preventDefault()
+	}
+</script>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    test
+</body>
+<script>
+    /* 这里是js */
+
+    /* js 收 vue */
+    window.addEventListener("message", function(e) {
+        console.log('子页面接收的参数', e.data.a)
+    }, false)
+
+    /* js 传 vue */
+    parent.postMessage({ str: '子页面发送的参数' }, '*')
+
+
+</script>
+</html>

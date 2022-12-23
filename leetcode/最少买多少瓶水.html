@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	最少买多少瓶水
+</body>
+<script>
+	const buyWater = (num) => {
+		console.time()
+		let free = 0
+		let buyNum = 0
+		while(num - ((buyNum + free) + 3) > 0) {
+			buyNum += 3
+			free++
+		}
+
+		if (buyNum + free < num) {
+			return buyNum + num - (buyNum + free)
+		}
+		return buyNum
+	}
+
+	console.log("buyWater(30)::: ", buyWater(99));
+</script>
+</html>

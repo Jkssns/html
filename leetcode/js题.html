@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+
+<script>
+
+
+
+function convertDate(src){
+	const obj = {
+		Jan: '1',
+		Feb: '2',
+		Mar: '3',
+		Apr: '4',
+		May: '5',
+		Jun: '6',
+		Jul: '7',
+		Aug: '8',
+		Sept: '9',
+		Oct: '10',
+		Nov: '11',
+		Dec: '12',
+	}
+
+	if (src.includes('-')) {
+		return src.replace(/-0|-/, '年').replace(/-0|-/, '月')
+	} else if (src.includes('/')) {
+		return src.replace(/\/0|\//, '年').replace(/\/0|\//, '月')
+	} else {
+		let tempArr = src.replace(',', '').split(' ')
+		let year = tempArr[2]
+		let month = obj[tempArr[0]]
+		let day = tempArr[1]
+
+		return year + '年' + month + '月' + day
+	}
+}
+
+console.log(convertDate("2021-01-01"))
+console.log(convertDate("2021/01/01"))
+console.log(convertDate("Jan 2, 2021"))
+
+	// O叫做“复杂度”
+
+	// 没有for循环，一行行的代码，就是O(1)时间复杂度，代表一眼看上去就知道代码什么时候会结束。
+	function a () {
+		let a = 1
+		let b = 2
+		return a + b
+	}
+
+	// 有1个for循环，就是O(n)时间复杂度，代表不知道什么时候结束，可能会无限多的执行。
+	function b () {
+		let a = 1
+		for (let i=0; i<10; i++) {
+			a += i
+		}
+		// for (let i=0; i<10; i++) { // 有两个for也是O(n)
+		// 	a += i
+		// }
+		return a
+	}
+
+	// 有嵌套for循环，就是O(n2)时间复杂度，代表不知道什么时候结束，可能会无限多的执行。
+	function b () {
+		let a = 1
+		for (let i=0; i<10; i++) {
+			for (let j=0; j<10; j++) {
+				a += j
+				// for () // 再来一层 就是O(n3)
+			}
+		}
+		return a
+	}
+
+
+
+</script>
+</html>

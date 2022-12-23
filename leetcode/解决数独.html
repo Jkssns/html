@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+		let arr = [
+		["5","3",".",".","7",".",".",".","."],
+		["6",".",".","1","9","5",".",".","."],
+		[".","9","8",".",".",".",".","6","."],
+		["8",".",".",".","6",".",".",".","3"],
+		["4",".",".","8",".","3",".",".","1"],
+		["7",".",".",".","2",".",".",".","6"],
+		[".","6",".",".",".",".","2","8","."],
+		[".",".",".","4","1","9",".",".","5"],
+		[".",".",".",".","8",".",".","7","9"], 
+	]
+	 const isVaild = (board) => {
+            const rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
+            const columns = new Array(9).fill(0).map(() => new Array(9).fill(0));
+            const subboxes = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => new Array(9).fill(0)));
+    
+            for (let i = 0; i < 9; i++) {
+                for (let j = 0; j < 9; j++) {
+                    if (board[i][j] !== '.') {
+                        const index = +board[i][j]
+                        rows[i][j]++
+                        columns[j][i]++
+                        subboxes[Math.floor(i / 3)][Math.floor(j / 3)][index - 1]++
+                        if (rows[i][j] > 1 || columns[j][i] > 1 || subboxes[Math.floor(i / 3)][Math.floor(j / 3)][index - 1] > 1) {
+                            return false
+                        }
+                    }
+                }
+            }
+			return true
+        }
+
+		console.log("isVaild(arr)::: ", isVaild(arr));
+</script>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const board = [
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"],
+    ]
+    // const abb = [
+    //     ["5", "3", "4", "6", "7", "8", "9", "1", "2"],
+    //     ["6", "7", "2", "1", "9", "5", "3", "4", "8"],
+    //     ["1", "9", "8", "3", "4", "2", "5", "6", "7"],
+    //     ["8", "5", "9", "7", "6", "1", "4", "2", "3"],
+    //     ["4", "2", "6", "8", "5", "3", "7", "9", "1"], 
+    //     ["7", "1", "3", "9", "2", "4", "8", "5", "6"],
+    //     ["9", "6", "1", "5", "3", "7", "2", "8", "4"],
+    //     ["2", "8", "7", "4", "1", "9", "6", "3", "5"],
+    //     ["3", "4", "5", "2", "8", "6", "1", "7", "9"]
+    // ]
+
+
+
+    /**
+    * @param {character[][]} board
+    * @return {void} Do not return anything, modify board in-place instead.
+    */
+    var solveSudoku = function (board) {
+
+        const isValid = (row, col, val, arr) => {
+            for (let i=0; i<9; i++) {
+                if (arr[row].includes(val)) {
+                    return false
+                }
+            }
+
+            for (let i=0; i<9; i++) {
+                if (arr[col][i] === val) {
+                    return false
+                }
+            }
+
+            let startRow = Math.floor(row / 3) * 3
+            let startCol = Math.floor(col / 3) * 3
+
+            for(let i = startRow; i < startRow + 3; i++) {
+                for(let j = startCol; j < startCol + 3; j++) {
+                    if(arr[i][j] === val) {
+                        return false
+                    }
+                }
+            }
+
+            return true
+        }
+
+        const backTracking = (board) => {
+            for (let i=0; i<9; i++) {
+                for (let j=0; j<9; j++) {
+                    if(board[i][j] !== '.') continue
+                    for(let val = 1; val <= 9; val++) {
+                        if(isValid(i, j, `${val}`, board)) {
+                            board[i][j] = `${val}`
+                            if (backTracking()) {
+                                return true
+                            }
+                            
+                            board[i][j] = `.`
+                        }
+                    }
+                }
+            }
+        }
+        
+        backTracking(board)
+
+        console.log("board::: ", board);
+    };
+
+
+    solveSudoku(board)
+</script>
+
+</html>
