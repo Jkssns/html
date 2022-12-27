@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            width: 5em;
+            padding: 5px;
+            border: 1px solid red;
+            cursor: pointer;
+            text-align: center;
+        }
+        p::after {
+            content: '关注';
+        }
+        p:hover::after {
+            content: '取消关注';
+        }
+    </style>
+</head>
+<body>
+    <p></p>
+</body>
+<script>
+</script>
+</html>
