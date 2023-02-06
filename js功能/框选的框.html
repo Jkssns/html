@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html, body, .container {
+			width: 100%;
+			height: 100%;
+		}
+		.container {
+			position: relative;
+		}
+		.rect_box {
+			position: absolute;
+			border: 1px solid blue;
+			border-radius: 1px;
+			background-color: rgba(0, 0, 255, 0.1);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+
+	</div>
+</body>
+<script>
+	const container = document.querySelector('.container');
+	container.addEventListener('mousedown', (downEvent) => {
+		const newDom = createRact(); // 创建一个dom
+		const windowW  = window.innerWidth; // 获取window的宽度
+		const windowH = window.innerHeight; // 获取window的高度
+		const startX = downEvent.clientX; // 获取点击的起始x位置
+		const startY = downEvent.clientY; // 获取点击的起始y位置
+
+		newDom.style.top = startY + 'px';
+		newDom.style.left = startX + 'px';
+		container.appendChild(newDom);
+
+		const move = (moveEvent) => {
+			const moveX = moveEvent.clientX - startX;
+			const moveY = moveEvent.clientY - startY;
+			const domStyle = newDom.style;
+
+			if (moveX >= 0) {
+				domStyle.right = 'auto';
+				domStyle.left = startX + 'px';
+				domStyle.width = moveX + 'px';
+			} else {
+				domStyle.left = 'auto';
+				domStyle.right = (windowW - startX) + 'px';
+				domStyle.width = Math.abs(moveX) + 'px';
+			}
+
+			if (moveY >= 0) {
+				domStyle.bottom = 'auto';
+				domStyle.top = startY + 'px';
+				domStyle.height = moveY + 'px';
+			} else {
+				domStyle.top = 'auto';
+				domStyle.bottom = (windowH - startY) + 'px';
+				domStyle.height = Math.abs(moveY) + 'px';
+			}
+		}
+
+		document.addEventListener('mousemove', move);
+
+		document.addEventListener('mouseup', function() {
+			container.removeChild(newDom);
+			document.removeEventListener('mousemove', move);
+			document.removeEventListener('mouseup', arguments.callee);
+		})
+	})
+
+	// 创建并返回一个带class的div
+	function createRact() {
+		const dom = document.createElement('div');
+		dom.className = 'rect_box';
+		return dom;
+	}
+	createRact();
+</script>
+</html>
