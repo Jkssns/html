@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <video id="player_html5_api" autoplay controls="controls">
+        <source src="https://acme-suzhou.oss-cn-beijing.aliyuncs.com/videos/63730c3120a2df00014db5be" crossOrigin="anonymous"/>
+    </video>
+    <button onclick="cut()">截图</button>
+    <div id="imgOut"></div>
+
+
+    <script>
+       var cut = function (){
+            var scale = 0.25;
+            var video = document.getElementById("player_html5_api");
+            var canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth * scale;
+            canvas.height = video.videoHeight * scale;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.setAttribute("id", "canvas");
+            document.getElementById("imgOut").append(canvas)
+            console.log(canvas.toDataURL());
+        }
+
+    </script>
+</body>
+</html>
+</body>
+</html>

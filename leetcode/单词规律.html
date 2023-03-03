@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+// 给定一种规律 pattern 和一个字符串 s ，判断 s 是否遵循相同的规律。
+
+// 这里的 遵循 指完全匹配，例如， pattern 里的每个字母和字符串 s 中的每个非空单词之间存在着双向连接的对应规律。
+// 示例1:
+
+// let pattern = "abba", s = "dog cat cat dog";
+// 输出: true
+// 示例 2:
+
+// let pattern = "abba", s = "dog cat cat fish";
+// 输出: false
+// 示例 3:
+
+let pattern = "abba", s = "dog constructor constructor dog";
+// 输出: false
+/**
+ * @param {string} pattern
+ * @param {string} s
+ * @return {boolean}
+ */
+var wordPattern = function(pattern, s) {
+	let obj = {};
+	let index = 0;
+	let str = pattern.split('').map(item => {
+		if (obj[item]) {
+			return obj[item];
+		} else {
+			index++;
+			obj[item] = index;
+			return index;
+		}
+	}).toString()
+	obj = {};
+	index = 0;
+	return s.split(' ').map(item => {
+		if (obj[item + 'a']) {
+			return obj[item + 'a'];
+		} else {
+			index++;
+			obj[item + 'a'] = index;
+			return index;
+		}
+	}).toString() === str
+};
+
+console.log('wordPattern(pattern, s): ', wordPattern(pattern, s));
+</script>
+</html>
