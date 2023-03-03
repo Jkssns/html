@@ -48,40 +48,5 @@ console.log(convertDate("2021-01-01"))
 console.log(convertDate("2021/01/01"))
 console.log(convertDate("Jan 2, 2021"))
 
-	// O叫做“复杂度”
-
-	// 没有for循环，一行行的代码，就是O(1)时间复杂度，代表一眼看上去就知道代码什么时候会结束。
-	function a () {
-		let a = 1
-		let b = 2
-		return a + b
-	}
-
-	// 有1个for循环，就是O(n)时间复杂度，代表不知道什么时候结束，可能会无限多的执行。
-	function b () {
-		let a = 1
-		for (let i=0; i<10; i++) {
-			a += i
-		}
-		// for (let i=0; i<10; i++) { // 有两个for也是O(n)
-		// 	a += i
-		// }
-		return a
-	}
-
-	// 有嵌套for循环，就是O(n2)时间复杂度，代表不知道什么时候结束，可能会无限多的执行。
-	function b () {
-		let a = 1
-		for (let i=0; i<10; i++) {
-			for (let j=0; j<10; j++) {
-				a += j
-				// for () // 再来一层 就是O(n3)
-			}
-		}
-		return a
-	}
-
-
-
 </script>
 </html>
