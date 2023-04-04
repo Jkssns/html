@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			overflow: auto;
+		}
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		div {
+			width: 5e7px;
+			height: 50px;
+			/* height: 500px;
+			overflow: scroll;
+			position: relative; */
+			background-color: grey;
+		}
+		ul {
+			width: 100%;
+		}
+		li {
+			position: absolute;
+			height: 50px;
+			line-height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<ul></ul>
+	</div>
+	<script>
+		// 浏览器css可显示最大宽高一览
+		// Firefox: 33554400px
+		// Chrome:  33554428px
+		// Opera:   33554428px
+		// IE 9:    21474836.47px
+		const ulDom = document.getElementsByTagName('div')[0]
+		const dom = document.getElementsByTagName('ul')[0]
+		const lis = new Array(1000000).fill('<li').map((item, index) => item + ` style="top: ${index * 50}px">` + index + '</li>');
+		dom.style.height = lis.length * 50 + 'px';
+		dom.innerHTML = lis.slice(0, 20).join('\n');
+
+		let oldIndex = 0;
+		ulDom.onscroll = function (event) {
+			let scrollTop = event.target.scrollTop;
+			let newIndex = Math.floor(scrollTop / 50);
+			if (newIndex !== oldIndex) {
+				oldIndex = newIndex;
+				const arr = lis.slice(newIndex, newIndex + 20)
+				dom.innerHTML = arr.join('\n');
+			} 
+		}
+	</script>
+</body>
+</html>

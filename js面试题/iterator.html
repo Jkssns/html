@@ -10,25 +10,23 @@
 </body>
 
 <script>
-    const iterator = () => {
-        let nextVal
-        return {
-            [Symbol.iterator]: function () { return this },
-            next: function() {
-                if (!nextVal) {
-                    nextVal = 3
-                } else {
-                    nextVal += 3
-                }
-                return {
-                    value: nextVal,
-                    done: nextVal > 30
-                }
+    let nextVal
+    const iterator = {
+        [Symbol.iterator]: function () { return this },
+        next: function() {
+            if (!nextVal) {
+                nextVal = 3
+            } else {
+                nextVal += 3
+            }
+            return {
+                value: nextVal,
+                done: nextVal > 30
             }
         }
     }
 
-    for (let i of iterator()) {
+    for (let i of iterator) {
         console.log("i::: ", i);
     }
 </script>

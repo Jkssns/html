@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id="canvas" width="200" height="200"></canvas>
+</body>
+<script>
+	const canvasDom = document.getElementById('canvas');
+	const ctx = canvasDom.getContext('2d');
+	ctx.fillStyle = '#f1f1f1';
+	ctx.fillRect(0, 0, 200, 200);
+
+	function angle(start,end){
+		var diff_x = end.x - start.x,
+			diff_y = end.y - start.y;
+		//返回角度,不是弧度
+		return 360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+	}
+	let a = angle({x: 10, y: 10 }, {x: 50, y: 100, })
+
+	// ctx.beginPath();
+	// ctx.moveTo(10, 10);
+	// ctx.lineTo(150, 150);
+	// ctx.stroke();
+
+	// ctx.beginPath();
+	// ctx.moveTo(150, 135);
+	// ctx.lineTo(150, 150);
+	// ctx.lineTo(135, 150);
+	// ctx.stroke();
+
+	ctx.beginPath();
+	ctx.moveTo(10, 10);
+	ctx.lineTo(50, 100);
+	ctx.stroke();
+	ctx.save();
+	ctx.translate(50,100);
+	ctx.rotate((Math.PI / 180) * (180 - a));
+	ctx.translate(-15,0);
+	ctx.beginPath();
+	ctx.moveTo(0, 0);
+	ctx.lineTo(15, 0);
+	ctx.lineTo(15, 15);
+	ctx.stroke();
+	ctx.restore();
+
+
+</script>
+</html>

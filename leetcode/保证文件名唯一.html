@@ -56,11 +56,11 @@ let names = ["kaido","kaido(1)","kaido","kaido(1)"]
 var getFolderNames = function(names) {
 	const obj = {};
 
-	for (let item of names) {
-		if (obj[item] === undefined) {
-			obj[item] = 0;
+	for (let key of names) {
+		if (obj[key] === undefined) {
+			obj[key] = 0;
 		} else {
-			obj[item]++;
+			obj[key]++;
 			if (obj[key + `(${obj[key]})`] === undefined) {
 				obj[key + `(${obj[key]})`] = 0
 			} else {
