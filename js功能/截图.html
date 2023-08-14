@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.screenshot_container::after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 1px solid #1aad19;
+		}
+
+		.screenshot_size {
+			position: absolute;
+			top: -20px;
+			height: 20px;
+			font-size: 12px;
+			user-select: none;
+			color: #fff;
+			letter-spacing: 2px;
+		}
+
+		.tool_wrapper {
+			/* display: none; */
+			position: absolute;
+			right: 0;
+			bottom: -60px;
+			width: 500px;
+			height: 50px;
+			background-color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+	<p>asdkashfdlkasdfkjas</p>
+</body>
+<script>
+	class Screenshot {
+		#screenshot_class = 'screenshot_container';
+		#size_class = 'screenshot_size';
+		#tool_class = 'tool_wrapper';
+		constructor(options) {
+			this.moved = false;
+			this.wrapper = null;
+			this.startPos = null;
+			this.moveHandler = null;
+			this.domMap = {};
+			this.distory();
+
+			this.keyBoardHandler = this.distoryFromKeyboard.bind(this);
+			window.addEventListener('keydown', this.keyBoardHandler);
+		}
+
+		getDom (className) {
+			if (this.domMap[className]) {
+				return this.domMap[className];
+			} else {
+				const dom = document.createElement('div');
+				dom.className = className;
+				this.domMap[className] = dom;
+				return dom;
+			}
+		}
+
+		distory () {
+			const dom = this.getDom(this.#screenshot_class);
+			if (document.querySelector(this.#screenshot_class)) {
+				document.body.removeChild(dom);
+				window.removeEventListener('keydown', this.keyBoardHandler);
+			}
+		}
+
+		distoryFromKeyboard (event) {
+			if (event.key.toLowerCase() === 'escape') {
+				this.distory();
+			}
+		}
+
+		setDomStyle (options) {
+			Object.assign(this.getDom(this.#screenshot_class).style, options);
+		}
+
+		crop () {
+			const screenshot = this.getDom(this.#screenshot_class);
+			const size = this.getDom(this.#size_class);
+			const tool = this.getDom(this.#tool_class);
+
+			size.innerText = '0x0';
+			screenshot.appendChild(size);
+			screenshot.appendChild(tool);
+			
+			document.onmousedown = (event) => this.onDown(event);
+			document.onmousemove = (event) => this.onDown(event);
+			screenshot.onmouseup = (event) => {
+
+			}
+			document.addEventListener('mouseup', () => {
+				this.moved = false;
+				document.removeEventListener('mousemove', this.moveHandler);
+			});
+			document.body.appendChild(screenshot);
+			this.setDomStyle({
+				position: 'absolute',
+				top: 0,
+				left: 0,
+				right: 0,
+				bottom: 0,
+				width: '100%',
+				height: '100%',
+				borderStyle: 'solid',
+				borderColor: '#1aad19',
+				boxSizing: 'border-box',
+			});
+		}
+
+		onDown (e) {
+			this.moved = true;
+			this.setDomStyle({
+				borderColor: 'rgba(0, 0, 0, 0.3)',
+				borderTopWidth: e.clientY + 'px',
+				borderLeftWidth: e.clientX + 'px',
+				borderRightWidth: window.innerWidth - e.clientX + 'px',
+				borderBottomWidth: window.innerHeight - e.clientY + 'px',
+			})
+			this.startPos = {
+				startY: e.clientY,
+				startX: e.clientX,
+			}
+			this.moveHandler = this.onMove.bind(this);
+			document.addEventListener('mousemove', this.moveHandler);
+		}
+
+		onMove (moveEvent) {
+			if (this.moved) {
+				const { startX, startY } = this.startPos;
+				const innerWidth = window.innerWidth, innerHeight = window.innerHeight;
+				const distanceX = moveEvent.clientX - startX;
+				const distanceY = moveEvent.clientY - startY;
+
+				if (distanceX >= 0) {
+					this.setDomStyle({
+						borderLeftWidth: startX + 'px',
+						borderRightWidth: innerWidth - moveEvent.clientX + 'px',
+					})
+				} else {
+					this.setDomStyle({
+						borderLeftWidth: moveEvent.clientX + 'px',
+						borderRightWidth: innerWidth - startX + 'px',
+					})
+				}
+
+				if (distanceY >= 0) {
+					this.setDomStyle({
+						borderTopWidth: startY + 'px',
+						borderBottomWidth: innerHeight - moveEvent.clientY + 'px',
+					})
+				} else {
+					this.setDomStyle({
+						borderTopWidth: moveEvent.clientY + 'px',
+						borderBottomWidth: innerHeight - startY + 'px',
+					})
+				}
+
+				this.getDom(this.#size_class).innerText = `${moveEvent.target.clientWidth}x${moveEvent.target.clientHeight}`;
+			}
+		}
+
+		getImgInfo () {
+
+		}
+	}
+
+	const shot = new Screenshot();
+	shot.crop();
+</script>
+
+</html>
