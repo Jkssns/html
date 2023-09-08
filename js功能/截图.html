@@ -11,12 +11,27 @@
 			padding: 0;
 		}
 
+		.screenshot_container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			border-style: solid;
+			border-color: rgba(0, 0, 0, 0.3);
+			border-width: 0;
+			box-sizing: border-box;
+		}
+
 		.screenshot_container::after {
 			content: '';
 			display: block;
 			width: 100%;
 			height: 100%;
 			border: 1px solid #1aad19;
+			box-sizing: border-box;
 		}
 
 		.screenshot_size {
@@ -33,15 +48,20 @@
 			/* display: none; */
 			position: absolute;
 			right: 0;
-			bottom: -60px;
+			bottom: -55px;
 			width: 500px;
 			height: 50px;
 			background-color: #fff;
+			border: 1px solid red;
+			box-sizing: border-box;
+			cursor: pointer;
+			z-index: 999;
 		}
 	</style>
 </head>
 
 <body>
+	<canvas></canvas>
 	<p>asdkashfdlkasdfkjas</p>
 	<p>asdkashfdlkasdfkjas</p>
 	<p>asdkashfdlkasdfkjas</p>
@@ -67,38 +87,40 @@
 	<p>asdkashfdlkasdfkjas</p>
 	<p>asdkashfdlkasdfkjas</p>
 </body>
+
 <script>
 	class Screenshot {
-		#screenshot_class = 'screenshot_container';
-		#size_class = 'screenshot_size';
-		#tool_class = 'tool_wrapper';
+		#Screenshot_class = 'screenshot_container';
+		#Size_class = 'screenshot_size';
+		#Tool_class = 'tool_wrapper';
 		constructor(options) {
 			this.moved = false;
 			this.wrapper = null;
 			this.startPos = null;
 			this.moveHandler = null;
+			this.dragEnd = false;
 			this.domMap = {};
-			this.distory();
 
 			this.keyBoardHandler = this.distoryFromKeyboard.bind(this);
 			window.addEventListener('keydown', this.keyBoardHandler);
 		}
 
-		getDom (className) {
-			if (this.domMap[className]) {
-				return this.domMap[className];
-			} else {
-				const dom = document.createElement('div');
-				dom.className = className;
-				this.domMap[className] = dom;
-				return dom;
-			}
+		createDom(className) {
+			const dom = document.createElement('div');
+			dom.className = className;
+			this.domMap[className] = dom;
+			return dom;
 		}
 
+		getDom (className) {
+			return this.domMap[className];
+		}
+
+
 		distory () {
-			const dom = this.getDom(this.#screenshot_class);
-			if (document.querySelector(this.#screenshot_class)) {
-				document.body.removeChild(dom);
+			const dom = this.getDom(this.#Screenshot_class);
+			document.body.removeChild(this.getDom(this.#Screenshot_class));
+			if (dom) {
 				window.removeEventListener('keydown', this.keyBoardHandler);
 			}
 		}
@@ -109,52 +131,43 @@
 			}
 		}
 
-		setDomStyle (options) {
-			Object.assign(this.getDom(this.#screenshot_class).style, options);
+		setDomStyle (options, dom = this.getDom(this.#Screenshot_class)) {
+			Object.assign(dom.style, options);
 		}
 
 		crop () {
-			const screenshot = this.getDom(this.#screenshot_class);
-			const size = this.getDom(this.#size_class);
-			const tool = this.getDom(this.#tool_class);
+			const screenshot = this.createDom(this.#Screenshot_class);
+			const size = this.createDom(this.#Size_class);
 
 			size.innerText = '0x0';
 			screenshot.appendChild(size);
-			screenshot.appendChild(tool);
 			
-			document.onmousedown = (event) => this.onDown(event);
-			document.onmousemove = (event) => this.onDown(event);
-			screenshot.onmouseup = (event) => {
+			document.onmousedown = (event) => this.onDocumentDown(event);
 
-			}
-			document.addEventListener('mouseup', () => {
+			document.addEventListener('mouseup', (e) => {
 				this.moved = false;
+				this.dragEnd = true;
 				document.removeEventListener('mousemove', this.moveHandler);
+				// 原地点击，全屏截图
+				if (e.clientX === this.startPos.startX && e.clientY === this.startPos.startY) {
+					this.setDomStyle({
+						borderTopWidth: 0,
+						borderLeftWidth: 0,	
+						borderRightWidth: 0,
+						borderBottomWidth: 0,
+					})
+				}
+				this.cropDone();
 			});
 			document.body.appendChild(screenshot);
-			this.setDomStyle({
-				position: 'absolute',
-				top: 0,
-				left: 0,
-				right: 0,
-				bottom: 0,
-				width: '100%',
-				height: '100%',
-				borderStyle: 'solid',
-				borderColor: '#1aad19',
-				boxSizing: 'border-box',
-			});
 		}
 
-		onDown (e) {
+		onDocumentDown (e) {
+			if (document.querySelector('.' + this.#Tool_class)) {
+				return;
+			}
+			this.dragEnd = false;
 			this.moved = true;
-			this.setDomStyle({
-				borderColor: 'rgba(0, 0, 0, 0.3)',
-				borderTopWidth: e.clientY + 'px',
-				borderLeftWidth: e.clientX + 'px',
-				borderRightWidth: window.innerWidth - e.clientX + 'px',
-				borderBottomWidth: window.innerHeight - e.clientY + 'px',
-			})
 			this.startPos = {
 				startY: e.clientY,
 				startX: e.clientX,
@@ -194,8 +207,58 @@
 					})
 				}
 
-				this.getDom(this.#size_class).innerText = `${moveEvent.target.clientWidth}x${moveEvent.target.clientHeight}`;
+				this.getDom(this.#Size_class).innerText = `${moveEvent.target.clientWidth}x${moveEvent.target.clientHeight}`;
 			}
+		}
+
+		cropDone(callback) {
+			if (this.getDom(this.#Tool_class)) {
+				return;
+			}
+
+			const tool = this.createDom(this.#Tool_class);
+			const container = this.getDom(this.#Screenshot_class);
+			container.appendChild(tool);
+			const {
+				borderTopWidth,
+				borderBottomWidth,
+				borderLeftWidth,
+				borderRightWidth,
+			} = window.getComputedStyle(container);
+			const bt = parseInt(borderTopWidth), 
+				bb = parseInt(borderBottomWidth),
+				bl = parseInt(borderLeftWidth),
+				br = parseInt(borderRightWidth);
+			let toolX = 'right', // left | right
+				toolY = 'bottom', // top | bottom
+				toolZ = 'out'; // in | out
+			
+			if (bb <= tool.offsetHeight) {
+				toolY = 'top';
+			}
+			if (bt <= tool.offsetHeight && bb <= tool.offsetHeight) {
+				toolZ = 'in';
+			}
+			if (bl <= tool.offsetWidth) {
+				toolX = 'left';
+			}
+
+			if (toolX === 'left') {
+				tool.style.left = 0;
+			}
+			if (toolY === 'top') {
+				tool.style.top = '-55px';
+			}
+			if (toolZ === 'in') {
+				tool.style.top = 'auto';
+				tool.style.right = 0;
+				tool.style.bottom = '0';
+			}
+		}
+		
+		save () {
+			// this.distory();
+			document.body.removeChild(this.createDom(this.#Screenshot_class));
 		}
 
 		getImgInfo () {
