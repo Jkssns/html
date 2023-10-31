@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		/* @scope (.box) {
+			:scope { */
+				/* :scope伪类表示自身 */
+				/* color: red; */
+			/* }
+			.blue {
+				color: blue;
+			}
+		} */
+
+		/* 等同于 */
+		/* .box > p:nth-of-type(1) {
+			color: red;
+		}
+		.box > .blue {
+			color: blue
+		} */
+
+		@scope (.box) to (.box_2) {
+			.blue {
+				color: blue;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<p class="blue">text0</p>
+		<div class="box_2">
+			<span class="blue">text1</span>
+		</div>
+	</div>
+
+	<div>
+		<style>
+			@scope {
+				.blue { color: blue; }
+			}
+		</style>
+		<p class="blue">text1</p>
+	</div>
+</body>
+</html>
